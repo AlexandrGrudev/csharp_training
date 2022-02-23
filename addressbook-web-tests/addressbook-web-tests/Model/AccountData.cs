@@ -1,4 +1,4 @@
-﻿namespace addressbook_web_tests
+﻿namespace addressbook_web_tests.Model
 {
     public class AccountData
     {

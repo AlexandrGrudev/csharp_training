@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using addressbook_web_tests.Model;
+using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
@@ -8,18 +9,18 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitContactCreation();
+            Application.Navigator.OpenHomePage();
+            Application.Auth.Login(new AccountData("admin", "secret"));
+            Application.Contacts.InitContactCreation();
 
             var contactData = new ContactData("first name", "last name")
             {
                 Email = "email"
             };
 
-            FillContactForm(contactData);
-            ReturnToHomePage();
-            Logout();
+            Application.Contacts.FillContactForm(contactData);
+            Application.Navigator.ReturnToHomePage();
+            Application.Auth.Logout();
         }
     }
 }

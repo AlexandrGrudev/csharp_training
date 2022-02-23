@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using addressbook_web_tests.Model;
+using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
@@ -8,21 +9,21 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
+            Application.Navigator.OpenHomePage();
+            Application.Auth.Login(new AccountData("admin", "secret"));
+            Application.Navigator.GoToGroupsPage();
+            Application.Groups.InitGroupCreation();
 
             var groupData = new GroupData("name")
             {
                 Header = "header",
                 Footer = "footer"
             };
-            FillGroupForm(groupData);
+            Application.Groups.FillGroupForm(groupData);
 
-            Submit();
-            ReturnToGroupsPage();
-            Logout();
+            Application.Groups.SubmitGroupCreation();
+            Application.Navigator.ReturnToGroupsPage();
+            Application.Auth.Logout();
         }
     }
 }
