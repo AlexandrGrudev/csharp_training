@@ -67,7 +67,7 @@
     <Compile Include="AccountData.cs" />
     <Compile Include="ContactData.cs" />
     <Compile Include="GroupData.cs" />
-    <Compile Include="Tests\UnitTest1.cs" />
+    <Compile Include="Tests\AutoTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
