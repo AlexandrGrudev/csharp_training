@@ -5,9 +5,11 @@ namespace addressbook_web_tests.AppManager
     public class HelperBase
     {
         protected IWebDriver Driver;
-        public HelperBase(IWebDriver driver)
+        protected ApplicationManager AppManager;
+        public HelperBase(ApplicationManager appManager)
         {
-            Driver = driver;
+            this.AppManager = appManager;
+            Driver = appManager.Driver;
         }
     }
 }

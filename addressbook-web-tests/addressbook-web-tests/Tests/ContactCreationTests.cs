@@ -9,18 +9,12 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactCreationTest()
         {
-            Application.Navigator.OpenHomePage();
-            Application.Auth.Login(new AccountData("admin", "secret"));
-            Application.Contacts.InitContactCreation();
-
             var contactData = new ContactData("first name", "last name")
             {
                 Email = "email"
             };
 
-            Application.Contacts.FillContactForm(contactData);
-            Application.Navigator.ReturnToHomePage();
-            Application.Auth.Logout();
+            Application.Contacts.Create(contactData);
         }
     }
 }

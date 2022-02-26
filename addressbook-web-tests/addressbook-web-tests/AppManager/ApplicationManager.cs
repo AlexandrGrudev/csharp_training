@@ -6,8 +6,8 @@ namespace addressbook_web_tests.AppManager
 {
     public class ApplicationManager
     {
-        protected IWebDriver Driver;
-        protected string BaseUrl;
+        protected IWebDriver driver;
+        protected string baseUrl;
 
         protected LoginHelper LoginHelper;
         protected NavigationHelper NavigationHelper;
@@ -16,14 +16,17 @@ namespace addressbook_web_tests.AppManager
 
         public ApplicationManager()
         {
-            Driver = new ChromeDriver(@"C:\Windows\SysWOW64");
-            BaseUrl = "http://localhost/addressbook";
+            driver = new ChromeDriver(@"C:\Windows\SysWOW64");
+            baseUrl = "http://localhost/addressbook";
 
-            LoginHelper = new LoginHelper(Driver);
-            NavigationHelper = new NavigationHelper(Driver, BaseUrl);
-            GroupHelper = new GroupHelper(Driver);
-            ContactHelper = new ContactHelper(Driver);
+            LoginHelper = new LoginHelper(this);
+            NavigationHelper = new NavigationHelper(this);
+            GroupHelper = new GroupHelper(this);
+            ContactHelper = new ContactHelper(this);
         }
+
+        public IWebDriver Driver => driver;
+        public string BaseUrl => baseUrl;
 
         public LoginHelper Auth => LoginHelper;
         public NavigationHelper Navigator => NavigationHelper;

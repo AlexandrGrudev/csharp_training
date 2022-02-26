@@ -9,21 +9,25 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void GroupCreationTest()
         {
-            Application.Navigator.OpenHomePage();
-            Application.Auth.Login(new AccountData("admin", "secret"));
-            Application.Navigator.GoToGroupsPage();
-            Application.Groups.InitGroupCreation();
-
             var groupData = new GroupData("name")
             {
                 Header = "header",
                 Footer = "footer"
             };
-            Application.Groups.FillGroupForm(groupData);
 
-            Application.Groups.SubmitGroupCreation();
-            Application.Navigator.ReturnToGroupsPage();
-            Application.Auth.Logout();
+            Application.Groups.Create(groupData);
+        }
+
+        [Test]
+        public void EmptyGroupCreationTest()
+        {
+            var groupData = new GroupData("")
+            {
+                Header = "",
+                Footer = ""
+            };
+
+            Application.Groups.Create(groupData);
         }
     }
 }

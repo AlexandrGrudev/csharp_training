@@ -5,16 +5,59 @@ namespace addressbook_web_tests.AppManager
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager appManager) : base(appManager)
         {
         }
 
-        public void InitContactCreation()
+        public ContactHelper Create(ContactData contactData)
+        {
+            InitContactCreation();
+            FillContactForm(contactData);
+            AppManager.Navigator.ReturnToHomePage();
+
+            return this;
+        }
+
+        public ContactHelper Modify(int index, ContactData newContactData)
+        {
+            AppManager.Navigator.OpenHomePage();
+            InitContactModification(index);
+            FillContactForm(newContactData);
+            SubmitContactModification();
+            AppManager.Navigator.ReturnToHomePage();
+
+            return this;
+        }
+
+        public void Remove(int index)
+        {
+            AppManager.Navigator.OpenHomePage();
+            SelectContact(index);
+            RemoveSelectedContacts();
+            SubmitContactRemoval();
+            AppManager.Navigator.OpenHomePage();
+        }
+
+        public ContactHelper InitContactCreation()
         {
             Driver.FindElement(By.LinkText("add new")).Click();
+
+            return this;
         }
 
-        public void FillContactForm(ContactData contactData)
+        public ContactHelper InitContactModification(int index)
+        {
+            Driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ ++index +"]/td[8]/a/img")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            Driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ ++index +"]/td/input")).Click();
+            return this;
+        }
+
+        public ContactHelper FillContactForm(ContactData contactData)
         {
             Driver.FindElement(By.Name("firstname")).Click();
             Driver.FindElement(By.Name("firstname")).Clear();
@@ -26,6 +69,26 @@ namespace addressbook_web_tests.AppManager
             Driver.FindElement(By.Name("email")).Clear();
             Driver.FindElement(By.Name("email")).SendKeys(contactData.Email);
             Driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+
+            return this;
+        }
+
+        public ContactHelper RemoveSelectedContacts()
+        {
+            Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            Driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactRemoval()
+        {
+            Driver.SwitchTo().Alert().Accept();
+            return this;
         }
     }
 }

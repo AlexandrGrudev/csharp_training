@@ -5,9 +5,9 @@ namespace addressbook_web_tests.AppManager
     public class NavigationHelper : HelperBase
     {
         private readonly string _baseUrl;
-        public NavigationHelper(IWebDriver driver, string baseUrl) : base(driver)
+        public NavigationHelper(ApplicationManager appManager) : base(appManager)
         {
-            _baseUrl = baseUrl;
+            _baseUrl = appManager.BaseUrl;
         }
 
         public void OpenHomePage()
@@ -16,11 +16,6 @@ namespace addressbook_web_tests.AppManager
         }
 
         public void GoToGroupsPage()
-        {
-            Driver.FindElement(By.LinkText("groups")).Click();
-        }
-
-        public void ReturnToGroupsPage()
         {
             Driver.FindElement(By.LinkText("groups")).Click();
         }
