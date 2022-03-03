@@ -2,7 +2,7 @@
 
 namespace addressbook_web_tests.Tests
 {
-    public class GroupRemovalTests : AutoTestBase
+    public class GroupRemovalTests : AuthTestBase
     {
         [Test]
         public void GroupRemovalTest()

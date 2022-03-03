@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
-    public class ContactModificationTests : AutoTestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()

@@ -12,11 +12,21 @@ namespace addressbook_web_tests.AppManager
 
         public void OpenHomePage()
         {
+            if (Driver.Url == _baseUrl)
+            {
+                return;
+            }
+
             Driver.Navigate().GoToUrl(_baseUrl);
         }
 
         public void GoToGroupsPage()
         {
+            if (Driver.Url == _baseUrl + "/group.php" && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
+
             Driver.FindElement(By.LinkText("groups")).Click();
         }
 

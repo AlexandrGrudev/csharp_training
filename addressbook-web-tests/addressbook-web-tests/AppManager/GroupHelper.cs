@@ -23,6 +23,7 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper Modify(int index, GroupData newGroupData)
         {
             AppManager.Navigator.GoToGroupsPage();
+            CreateGroupIfNeedeed();
             SelectGroup(index);
             ModifySelectedGroup();
             FillGroupForm(newGroupData);
@@ -35,6 +36,7 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper Remove(int index)
         {
             AppManager.Navigator.GoToGroupsPage();
+            CreateGroupIfNeedeed();
             SelectGroup(index);
             RemoveSelectedGroups();
             return this;
@@ -48,15 +50,10 @@ namespace addressbook_web_tests.AppManager
 
         public GroupHelper FillGroupForm(GroupData groupData)
         {
-            Driver.FindElement(By.Name("group_name")).Click();
-            Driver.FindElement(By.Name("group_name")).Clear();
-            Driver.FindElement(By.Name("group_name")).SendKeys(groupData.Name);
-            Driver.FindElement(By.Name("group_header")).Click();
-            Driver.FindElement(By.Name("group_header")).Clear();
-            Driver.FindElement(By.Name("group_header")).SendKeys(groupData.Header);
-            Driver.FindElement(By.Name("group_footer")).Click();
-            Driver.FindElement(By.Name("group_footer")).Clear();
-            Driver.FindElement(By.Name("group_footer")).SendKeys(groupData.Footer);
+            Type(By.Name("group_name"), groupData.Name);
+            Type(By.Name("group_header"), groupData.Header);
+            Type(By.Name("group_footer"), groupData.Footer);
+
             return this;
         }
 
@@ -88,6 +85,14 @@ namespace addressbook_web_tests.AppManager
         {
             Driver.FindElement(By.Name("delete")).Click();
             return this;
+        }
+
+        private void CreateGroupIfNeedeed()
+        {
+            if (!IsElementPresent(By.ClassName("group")))
+            {
+                Create(new GroupData("test group"));
+            }
         }
     }
 }

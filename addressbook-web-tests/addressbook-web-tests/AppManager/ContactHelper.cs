@@ -21,6 +21,7 @@ namespace addressbook_web_tests.AppManager
         public ContactHelper Modify(int index, ContactData newContactData)
         {
             AppManager.Navigator.OpenHomePage();
+            CreateContactIfNeeded();
             InitContactModification(index);
             FillContactForm(newContactData);
             SubmitContactModification();
@@ -32,6 +33,7 @@ namespace addressbook_web_tests.AppManager
         public void Remove(int index)
         {
             AppManager.Navigator.OpenHomePage();
+            CreateContactIfNeeded();
             SelectContact(index);
             RemoveSelectedContacts();
             SubmitContactRemoval();
@@ -59,17 +61,10 @@ namespace addressbook_web_tests.AppManager
 
         public ContactHelper FillContactForm(ContactData contactData)
         {
-            Driver.FindElement(By.Name("firstname")).Click();
-            Driver.FindElement(By.Name("firstname")).Clear();
-            Driver.FindElement(By.Name("firstname")).SendKeys(contactData.FirstName);
-            Driver.FindElement(By.Name("lastname")).Click();
-            Driver.FindElement(By.Name("lastname")).Clear();
-            Driver.FindElement(By.Name("lastname")).SendKeys(contactData.LastName);
-            Driver.FindElement(By.Name("email")).Click();
-            Driver.FindElement(By.Name("email")).Clear();
-            Driver.FindElement(By.Name("email")).SendKeys(contactData.Email);
+            Type(By.Name("firstname"), contactData.FirstName);
+            Type(By.Name("lastname"), contactData.LastName);
+            Type(By.Name("email"), contactData.Email);
             Driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
-
             return this;
         }
 
@@ -89,6 +84,14 @@ namespace addressbook_web_tests.AppManager
         {
             Driver.SwitchTo().Alert().Accept();
             return this;
+        }
+
+        private void CreateContactIfNeeded()
+        {
+            if (!IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[2]")))
+            { 
+                Create(new ContactData("FirstName", "LastName"));
+            }
         }
     }
 }

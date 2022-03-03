@@ -5,24 +5,44 @@ namespace addressbook_web_tests.AppManager
 {
     public class LoginHelper : HelperBase
     {
-        public LoginHelper(ApplicationManager appManager) : base (appManager)
+        public LoginHelper(ApplicationManager appManager) : base(appManager)
         {
         }
 
         public void Login(AccountData accountData)
         {
-            Driver.FindElement(By.Name("user")).Click();
-            Driver.FindElement(By.Name("user")).Clear();
-            Driver.FindElement(By.Name("user")).SendKeys(accountData.Username);
-            Driver.FindElement(By.Name("pass")).Click();
-            Driver.FindElement(By.Name("pass")).Clear();
-            Driver.FindElement(By.Name("pass")).SendKeys(accountData.Password);
+            if (IsLoggedIn())
+            {
+                if (IsLoggedIn(accountData))
+                {
+                    return;
+                }
+
+                Logout();
+            }
+
+            Type(By.Name("user"), accountData.Username);
+            Type(By.Name("pass"), accountData.Password);
             Driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
         public void Logout()
         {
-            Driver.FindElement(By.LinkText("Logout")).Click();
+            if (IsLoggedIn())
+            {
+                Driver.FindElement(By.LinkText("Logout")).Click();
+            }
+        }
+
+        public bool IsLoggedIn()
+        {
+            return IsElementPresent(By.LinkText("Logout"));
+        }
+
+        public bool IsLoggedIn(AccountData accountData)
+        {
+            return IsLoggedIn() && Driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text ==
+                   $"({accountData.Username})";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -14,7 +15,9 @@ namespace addressbook_web_tests.AppManager
         protected GroupHelper GroupHelper;
         protected ContactHelper ContactHelper;
 
-        public ApplicationManager()
+        private static readonly ThreadLocal<ApplicationManager> App = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new ChromeDriver(@"C:\Windows\SysWOW64");
             baseUrl = "http://localhost/addressbook";
@@ -25,6 +28,20 @@ namespace addressbook_web_tests.AppManager
             ContactHelper = new ContactHelper(this);
         }
 
+        ~ApplicationManager()
+        {
+            Auth.Logout();
+            
+            try
+            {
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                // Ignore errors if unable to close the browser
+            }
+        }
+
         public IWebDriver Driver => driver;
         public string BaseUrl => baseUrl;
 
@@ -33,17 +50,16 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper Groups => GroupHelper;
         public ContactHelper Contacts => ContactHelper;
 
-
-        public void Stop()
+        public static ApplicationManager GetInstance()
         {
-            try
+            if (!App.IsValueCreated)
             {
-                Driver.Quit();
+                var newInstance = new ApplicationManager();
+                App.Value = newInstance;
+                newInstance.Navigator.OpenHomePage();
             }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
+
+            return App.Value;
         }
     }
 }
