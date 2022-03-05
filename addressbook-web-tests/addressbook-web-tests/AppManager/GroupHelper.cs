@@ -23,7 +23,6 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper Modify(int index, GroupData newGroupData)
         {
             AppManager.Navigator.GoToGroupsPage();
-            CreateGroupIfNeedeed();
             SelectGroup(index);
             ModifySelectedGroup();
             FillGroupForm(newGroupData);
@@ -36,7 +35,6 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper Remove(int index)
         {
             AppManager.Navigator.GoToGroupsPage();
-            CreateGroupIfNeedeed();
             SelectGroup(index);
             RemoveSelectedGroups();
             return this;
@@ -87,12 +85,14 @@ namespace addressbook_web_tests.AppManager
             return this;
         }
 
-        private void CreateGroupIfNeedeed()
+        public GroupHelper CreateGroupIfNeedeed()
         {
             if (!IsElementPresent(By.ClassName("group")))
             {
                 Create(new GroupData("test group"));
             }
+
+            return this;
         }
     }
 }

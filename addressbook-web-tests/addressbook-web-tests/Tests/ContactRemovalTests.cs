@@ -7,6 +7,7 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactRemovalTest()
         {
+            Application.Contacts.CreateContactIfNeeded();
             Application.Contacts.Remove(1);
         }
     }

@@ -13,7 +13,7 @@ namespace addressbook_web_tests.Tests
                 Header = "header1",
                 Footer = "footer1"
             };
-
+            Application.Groups.CreateGroupIfNeedeed();
             Application.Groups.Modify(1, newGroupData);
         }
     }

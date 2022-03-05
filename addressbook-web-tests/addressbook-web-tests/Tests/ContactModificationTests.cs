@@ -13,6 +13,7 @@ namespace addressbook_web_tests.Tests
                 Email = "email1"
             };
 
+            Application.Contacts.CreateContactIfNeeded();
             Application.Contacts.Modify(1, newContactData);
         }
     }

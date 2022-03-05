@@ -21,7 +21,6 @@ namespace addressbook_web_tests.AppManager
         public ContactHelper Modify(int index, ContactData newContactData)
         {
             AppManager.Navigator.OpenHomePage();
-            CreateContactIfNeeded();
             InitContactModification(index);
             FillContactForm(newContactData);
             SubmitContactModification();
@@ -33,7 +32,6 @@ namespace addressbook_web_tests.AppManager
         public void Remove(int index)
         {
             AppManager.Navigator.OpenHomePage();
-            CreateContactIfNeeded();
             SelectContact(index);
             RemoveSelectedContacts();
             SubmitContactRemoval();
@@ -86,12 +84,14 @@ namespace addressbook_web_tests.AppManager
             return this;
         }
 
-        private void CreateContactIfNeeded()
+        public ContactHelper CreateContactIfNeeded()
         {
             if (!IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[2]")))
             { 
                 Create(new ContactData("FirstName", "LastName"));
             }
+
+            return this;
         }
     }
 }
