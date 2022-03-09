@@ -1,4 +1,5 @@
-﻿using addressbook_web_tests.Model;
+﻿using System.Collections.Generic;
+using addressbook_web_tests.Model;
 using OpenQA.Selenium;
 
 namespace addressbook_web_tests.AppManager
@@ -69,7 +70,7 @@ namespace addressbook_web_tests.AppManager
 
         public GroupHelper SelectGroup(int index)
         {
-            Driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+            Driver.FindElement(By.XPath("//div[@id='content']/form/span[" + ++index + "]/input")).Click();
             return this;
         }
 
@@ -93,6 +94,21 @@ namespace addressbook_web_tests.AppManager
             }
 
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            AppManager.Navigator.GoToGroupsPage();
+
+            var groups = new List<GroupData>();
+            var elements = Driver.FindElements(By.CssSelector("span.group"));
+            
+            foreach (var element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
         }
     }
 }

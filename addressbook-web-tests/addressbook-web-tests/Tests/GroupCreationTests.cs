@@ -15,7 +15,15 @@ namespace addressbook_web_tests.Tests
                 Footer = "footer"
             };
 
+            var oldGroupsList = Application.Groups.GetGroupList();
+
             Application.Groups.Create(groupData);
+
+            var newGroupsList = Application.Groups.GetGroupList();
+            oldGroupsList.Add(groupData);
+            oldGroupsList.Sort();
+            newGroupsList.Sort();
+            Assert.AreEqual(oldGroupsList, newGroupsList);
         }
 
         [Test]
@@ -27,7 +35,35 @@ namespace addressbook_web_tests.Tests
                 Footer = ""
             };
 
+            var oldGroupsList = Application.Groups.GetGroupList();
+
             Application.Groups.Create(groupData);
+
+            var newGroupsList = Application.Groups.GetGroupList();
+            oldGroupsList.Add(groupData);
+            oldGroupsList.Sort();
+            newGroupsList.Sort();
+            Assert.AreEqual(oldGroupsList, newGroupsList);
+        }
+
+        [Test]
+        public void BadNameGroupCreationTest()
+        {
+            var groupData = new GroupData("'name")
+            {
+                Header = "",
+                Footer = ""
+            };
+
+            var oldGroupsList = Application.Groups.GetGroupList();
+
+            Application.Groups.Create(groupData);
+
+            var newGroupsList = Application.Groups.GetGroupList();
+            oldGroupsList.Add(groupData);
+            oldGroupsList.Sort();
+            newGroupsList.Sort();
+            Assert.AreEqual(oldGroupsList, newGroupsList);
         }
     }
 }

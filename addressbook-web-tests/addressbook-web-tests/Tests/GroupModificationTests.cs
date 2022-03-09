@@ -13,8 +13,17 @@ namespace addressbook_web_tests.Tests
                 Header = "header1",
                 Footer = "footer1"
             };
+
             Application.Groups.CreateGroupIfNeedeed();
+            var oldGroupsList = Application.Groups.GetGroupList();
+
             Application.Groups.Modify(1, newGroupData);
+
+            var newGroupsList = Application.Groups.GetGroupList();
+            oldGroupsList[1].Name = newGroupData.Name;
+            oldGroupsList.Sort();
+            newGroupsList.Sort();
+            Assert.AreEqual(oldGroupsList, newGroupsList);
         }
     }
 }

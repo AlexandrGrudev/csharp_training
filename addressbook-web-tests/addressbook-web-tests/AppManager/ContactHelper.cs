@@ -1,4 +1,5 @@
-﻿using addressbook_web_tests.Model;
+﻿using System.Collections.Generic;
+using addressbook_web_tests.Model;
 using OpenQA.Selenium;
 
 namespace addressbook_web_tests.AppManager
@@ -92,6 +93,22 @@ namespace addressbook_web_tests.AppManager
             }
 
             return this;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            AppManager.Navigator.OpenHomePage();
+
+            var contactList = new List<ContactData>();
+            
+            var rows = Driver.FindElements(By.Name("entry"));
+            foreach (var element in rows)
+            {
+                var columns = element.FindElements(By.CssSelector("td"));
+                contactList.Add(new ContactData(columns[2].Text, columns[1].Text));
+            }
+
+            return contactList;
         }
     }
 }

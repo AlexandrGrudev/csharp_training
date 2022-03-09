@@ -8,13 +8,22 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactModificationTest()
         {
-            var newContactData = new ContactData("ccc", "last name1")
+            var newContactData = new ContactData("ccc", "sss")
             {
-                Email = "email1"
+                Email = "zzz"
             };
 
             Application.Contacts.CreateContactIfNeeded();
+
+            var oldContactsList = Application.Contacts.GetContactList();
+
             Application.Contacts.Modify(1, newContactData);
+            var newContactList = Application.Contacts.GetContactList();
+            oldContactsList[0].FirstName = newContactData.FirstName;
+            oldContactsList[0].LastName = newContactData.LastName;
+            oldContactsList.Sort();
+            newContactList.Sort();
+            Assert.AreEqual(oldContactsList, newContactList);
         }
     }
 }

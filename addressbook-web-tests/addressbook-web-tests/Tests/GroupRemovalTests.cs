@@ -8,7 +8,13 @@ namespace addressbook_web_tests.Tests
         public void GroupRemovalTest()
         {
             Application.Groups.CreateGroupIfNeedeed();
-            Application.Groups.Remove(1);
+
+            var oldGroupsList = Application.Groups.GetGroupList();
+            Application.Groups.Remove(0);
+            
+            oldGroupsList.RemoveAt(0);
+            var newGroupList = Application.Groups.GetGroupList();
+            Assert.AreEqual(oldGroupsList, newGroupList);
         }
     }
 }

@@ -13,8 +13,16 @@ namespace addressbook_web_tests.Tests
             {
                 Email = "email"
             };
-
+            
+            var oldContactsList = Application.Contacts.GetContactList();
+            
             Application.Contacts.Create(contactData);
+
+            var newContactList = Application.Contacts.GetContactList();
+            oldContactsList.Add(contactData);
+            oldContactsList.Sort();
+            newContactList.Sort();
+            Assert.AreEqual(oldContactsList, newContactList);
         }
     }
 }
