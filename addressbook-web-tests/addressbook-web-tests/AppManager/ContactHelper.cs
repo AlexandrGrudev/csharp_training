@@ -64,6 +64,7 @@ namespace addressbook_web_tests.AppManager
             Type(By.Name("lastname"), contactData.LastName);
             Type(By.Name("email"), contactData.Email);
             Driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -76,12 +77,14 @@ namespace addressbook_web_tests.AppManager
         public ContactHelper SubmitContactModification()
         {
             Driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper SubmitContactRemoval()
         {
             Driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -95,20 +98,25 @@ namespace addressbook_web_tests.AppManager
             return this;
         }
 
+        private List<ContactData> contactCache;
+
         public List<ContactData> GetContactList()
         {
-            AppManager.Navigator.OpenHomePage();
-
-            var contactList = new List<ContactData>();
-            
-            var rows = Driver.FindElements(By.Name("entry"));
-            foreach (var element in rows)
+            if (this.contactCache == null)
             {
-                var columns = element.FindElements(By.CssSelector("td"));
-                contactList.Add(new ContactData(columns[2].Text, columns[1].Text));
+                AppManager.Navigator.OpenHomePage();
+
+                contactCache = new List<ContactData>();
+
+                var rows = Driver.FindElements(By.Name("entry"));
+                foreach (var element in rows)
+                {
+                    var columns = element.FindElements(By.CssSelector("td"));
+                    contactCache.Add(new ContactData(columns[2].Text, columns[1].Text));
+                }
             }
 
-            return contactList;
+            return new List<ContactData>(contactCache);
         }
     }
 }
