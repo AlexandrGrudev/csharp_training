@@ -76,6 +76,7 @@
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\AutoTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\ContactModificationTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
     <Compile Include="Tests\GroupCreationTests.cs" />
