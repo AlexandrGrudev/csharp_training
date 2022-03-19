@@ -79,7 +79,59 @@ namespace addressbook_web_tests.Model
 
         public string ConvertDataToString()
         {
-            return $"{FirstName} {LastName}\r\n{Address}\r\n\r\nH: {HomePhone}\r\nM: {MobilePhone}\r\nW: {WorkPhone}\r\n\r\n{Email}\r\n{Email2}\r\n{Email3}";
+            var result = "";
+            if (!string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName))
+            {
+                result += $"{FirstName} {LastName}\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(Address))
+            {
+                result += $"{Address}\r\n\r\n";
+            }
+
+            if ((!string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName)) && (string.IsNullOrEmpty(Address)))
+            {
+                result += "\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(HomePhone))
+            {
+                result += $"H: {HomePhone}\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(MobilePhone))
+            {
+                result += $"M: {MobilePhone}\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(WorkPhone))
+            {
+                result += $"W: {WorkPhone}\r\n";
+            }
+
+            if ((!string.IsNullOrEmpty(HomePhone)) || (!string.IsNullOrEmpty(MobilePhone)) || (!string.IsNullOrEmpty(WorkPhone)))
+            {
+                result += "\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(Email))
+            {
+                result += $"{Email}\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(Email2))
+            {
+                result += $"{Email2}\r\n";
+            }
+
+            if (!string.IsNullOrEmpty(Email3))
+            {
+                result += $"{Email3}\r\n";
+            }
+
+            Console.WriteLine("after converting: " + result);
+            return result.Trim();
         }
 
         public string Email { get; set; }

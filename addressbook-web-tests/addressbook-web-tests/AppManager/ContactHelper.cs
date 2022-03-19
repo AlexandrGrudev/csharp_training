@@ -174,7 +174,7 @@ namespace addressbook_web_tests.AppManager
             OpenDetailContactInformation(index);
 
             var information = Driver.FindElement(By.Id("content")).Text;
-            Console.WriteLine(information);
+            Console.WriteLine("details: " + information);
             return information;
         }
 
