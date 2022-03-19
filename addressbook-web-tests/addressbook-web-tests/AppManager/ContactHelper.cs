@@ -160,10 +160,11 @@ namespace addressbook_web_tests.AppManager
             var firstName = cells[2].Text;
             var address = cells[3].Text;
             var allPhones = cells[5].Text;
+            var allEmails = cells[4].Text;
 
             return new ContactData(firstName, lastName)
             {
-                Address = address, AllPhones = allPhones
+                Address = address, AllPhones = allPhones, AllEmails = allEmails
             };
         }
         

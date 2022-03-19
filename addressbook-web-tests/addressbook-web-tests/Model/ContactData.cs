@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace addressbook_web_tests.Model
@@ -7,6 +6,7 @@ namespace addressbook_web_tests.Model
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string _allPhones;
+        private string _allEmails;
 
         public ContactData(string firstName, string lastName)
         {
@@ -40,6 +40,23 @@ namespace addressbook_web_tests.Model
             }
         }
 
+        public string AllEmails
+        {
+            get
+            {
+                if (_allEmails != null)
+                {
+                    return _allEmails;
+                }
+
+                return ((ConvertToTableView(Email)) + ConvertToTableView(Email2) + ConvertToTableView(Email3)).Trim();
+            }
+            set
+            {
+                _allEmails = value;
+            }
+        }
+
         private string CleanUp(string phone)
         {
             if (string.IsNullOrEmpty(phone))
@@ -48,6 +65,16 @@ namespace addressbook_web_tests.Model
             }
 
             return Regex.Replace(phone, "[- ()]", "") + "\r\n";
+        }
+
+        private string ConvertToTableView(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return "";
+            }
+
+            return email + "\r\n";
         }
 
         public string ConvertDataToString()
