@@ -36,7 +36,7 @@ namespace addressbook_web_tests.Model
 
         public override string ToString()
         {
-            return "name = " + Name;
+            return $"Name = {Name}\nHeader = {Header}\nFooter = {Footer}";
         }
 
         public int CompareTo(GroupData other)

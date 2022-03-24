@@ -1,4 +1,5 @@
-﻿using addressbook_web_tests.Model;
+﻿using System.Collections.Generic;
+using addressbook_web_tests.Model;
 using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
@@ -6,14 +7,24 @@ namespace addressbook_web_tests.Tests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            var contactData = new ContactData("first name", "last name")
+            var contacts = new List<ContactData>();
+
+            for (var i = 0; i < 5; i++)
             {
-                Email = "email"
-            };
-            
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+                {
+                    Email = GenerateRandomString(30)
+                });
+            }
+
+            return contacts;
+        }
+
+        [Test, TestCaseSource(nameof(RandomContactDataProvider))]
+        public void ContactCreationTest(ContactData contactData)
+        { 
             var oldContactsList = Application.Contacts.GetContactList();
             
             Application.Contacts.Create(contactData);

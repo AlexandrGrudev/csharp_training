@@ -1,4 +1,5 @@
-﻿using addressbook_web_tests.Model;
+﻿using System.Collections.Generic;
+using addressbook_web_tests.Model;
 using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
@@ -6,55 +7,25 @@ namespace addressbook_web_tests.Tests
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
-        [Test]
-        public void GroupCreationTest()
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
-            var groupData = new GroupData("name")
+            var groups = new List<GroupData>();
+
+            for (var i = 0; i < 5; i++)
             {
-                Header = "header",
-                Footer = "footer"
-            };
+                groups.Add(new GroupData(GenerateRandomString(30))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+                });
+            }
 
-            var oldGroupsList = Application.Groups.GetGroupList();
-
-            Application.Groups.Create(groupData);
-
-            var newGroupsList = Application.Groups.GetGroupList();
-            oldGroupsList.Add(groupData);
-            oldGroupsList.Sort();
-            newGroupsList.Sort();
-            Assert.AreEqual(oldGroupsList, newGroupsList);
+            return groups;
         }
 
-        [Test]
-        public void EmptyGroupCreationTest()
+        [Test, TestCaseSource(nameof(RandomGroupDataProvider))]
+        public void GroupCreationTest(GroupData groupData)
         {
-            var groupData = new GroupData("")
-            {
-                Header = "",
-                Footer = ""
-            };
-
-            var oldGroupsList = Application.Groups.GetGroupList();
-
-            Application.Groups.Create(groupData);
-
-            var newGroupsList = Application.Groups.GetGroupList();
-            oldGroupsList.Add(groupData);
-            oldGroupsList.Sort();
-            newGroupsList.Sort();
-            Assert.AreEqual(oldGroupsList, newGroupsList);
-        }
-
-        [Test]
-        public void BadNameGroupCreationTest()
-        {
-            var groupData = new GroupData("'name")
-            {
-                Header = "",
-                Footer = ""
-            };
-
             var oldGroupsList = Application.Groups.GetGroupList();
 
             Application.Groups.Create(groupData);
