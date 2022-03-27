@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 using addressbook_web_tests.Model;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
@@ -24,7 +26,7 @@ namespace addressbook_web_tests.Tests
             return groups;
         }
 
-        public static IEnumerable<GroupData> GroupDataFromFile()
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             var groups = new List<GroupData>();
             var lines = File.ReadAllLines(@"groups.csv");
@@ -42,7 +44,23 @@ namespace addressbook_web_tests.Tests
             return groups;
         }
 
-        [Test, TestCaseSource(nameof(GroupDataFromFile))]
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            var xmlFilePath =
+                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\groupsData.xml";
+
+            return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(xmlFilePath));
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            var jsonFilePath =
+                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\groupsData.json";
+
+            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(jsonFilePath));
+        }
+
+        [Test, TestCaseSource(nameof(GroupDataFromJsonFile))]
         public void GroupCreationTest(GroupData groupData)
         {
             var oldGroupsList = Application.Groups.GetGroupList();

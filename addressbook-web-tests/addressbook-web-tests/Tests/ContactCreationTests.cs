@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using addressbook_web_tests.Model;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
@@ -22,7 +25,23 @@ namespace addressbook_web_tests.Tests
             return contacts;
         }
 
-        [Test, TestCaseSource(nameof(RandomContactDataProvider))]
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            var xmlFilePath =
+                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\contactsData.xml";
+
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(xmlFilePath));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            var jsonFilePath =
+                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\contactsData.json";
+
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(jsonFilePath));
+        }
+
+        [Test, TestCaseSource(nameof(ContactDataFromJsonFile))]
         public void ContactCreationTest(ContactData contactData)
         { 
             var oldContactsList = Application.Contacts.GetContactList();

@@ -8,6 +8,10 @@ namespace addressbook_web_tests.Model
         private string _allPhones;
         private string _allEmails;
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
