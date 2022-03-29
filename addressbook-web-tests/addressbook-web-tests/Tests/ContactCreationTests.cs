@@ -27,18 +27,12 @@ namespace addressbook_web_tests.Tests
 
         public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
-            var xmlFilePath =
-                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\contactsData.xml";
-
-            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(xmlFilePath));
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader("contactsData.xml"));
         }
 
         public static IEnumerable<ContactData> ContactDataFromJsonFile()
         {
-            var jsonFilePath =
-                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\contactsData.json";
-
-            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(jsonFilePath));
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("contactsData.json"));
         }
 
         [Test, TestCaseSource(nameof(ContactDataFromJsonFile))]

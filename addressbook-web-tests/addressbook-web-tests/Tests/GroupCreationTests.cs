@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using addressbook_web_tests.Model;
@@ -46,21 +47,15 @@ namespace addressbook_web_tests.Tests
 
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-            var xmlFilePath =
-                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\groupsData.xml";
-
-            return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(xmlFilePath));
+            return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader("groupsData.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
         {
-            var jsonFilePath =
-                @"C:\Users\Пользователь\source\repos\csharp_training\addressbook-web-tests\addressbook-web-tests\groupsData.json";
-
-            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(jsonFilePath));
+            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText("groupsData.json"));
         }
 
-        [Test, TestCaseSource(nameof(GroupDataFromJsonFile))]
+        [Test, TestCaseSource(nameof(GroupDataFromXmlFile))]
         public void GroupCreationTest(GroupData groupData)
         {
             var oldGroupsList = Application.Groups.GetGroupList();
