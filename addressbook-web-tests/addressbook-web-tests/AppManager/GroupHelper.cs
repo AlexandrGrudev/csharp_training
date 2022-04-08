@@ -41,6 +41,14 @@ namespace addressbook_web_tests.AppManager
             return this;
         }
 
+        public GroupHelper Remove(GroupData group)
+        {
+            AppManager.Navigator.GoToGroupsPage();
+            SelectGroup(group.Id);
+            RemoveSelectedGroups();
+            return this;
+        }
+
         public GroupHelper InitGroupCreation()
         {
             Driver.FindElement(By.XPath("//div[@id='content']/form/input[4]")).Click();
@@ -73,6 +81,12 @@ namespace addressbook_web_tests.AppManager
         public GroupHelper SelectGroup(int index)
         {
             Driver.FindElement(By.XPath("//div[@id='content']/form/span[" + ++index + "]/input")).Click();
+            return this;
+        }
+
+        public GroupHelper SelectGroup(string id)
+        {
+            Driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
 

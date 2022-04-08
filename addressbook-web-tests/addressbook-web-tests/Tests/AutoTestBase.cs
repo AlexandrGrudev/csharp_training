@@ -2,11 +2,13 @@
 using System.Text;
 using addressbook_web_tests.AppManager;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace addressbook_web_tests.Tests
 {
     public class AutoTestBase
     {
+        public static bool PERFORM_LONG_UI_CHECKS = true;
         protected ApplicationManager Application;
 
         [SetUp]

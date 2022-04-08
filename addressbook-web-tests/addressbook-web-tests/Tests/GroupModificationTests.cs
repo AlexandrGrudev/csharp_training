@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()
@@ -15,11 +15,11 @@ namespace addressbook_web_tests.Tests
             };
 
             Application.Groups.CreateGroupIfNeedeed();
-            var oldGroupsList = Application.Groups.GetGroupList();
+            var oldGroupsList = GroupData.GetAllGroups();
             var oldData = oldGroupsList[1];
             Application.Groups.Modify(1, newGroupData);
 
-            var newGroupsList = Application.Groups.GetGroupList();
+            var newGroupsList = GroupData.GetAllGroups();
             oldGroupsList[1].Name = newGroupData.Name;
             oldGroupsList.Sort();
             newGroupsList.Sort();
