@@ -16,12 +16,13 @@ namespace addressbook_web_tests.Tests
 
             Application.Contacts.CreateContactIfNeeded();
 
-            var oldContactsList = Application.Contacts.GetContactList();
-
-            Application.Contacts.Modify(1, newContactData);
-            var newContactList = Application.Contacts.GetContactList();
-            oldContactsList[1].FirstName = newContactData.FirstName;
-            oldContactsList[1].LastName = newContactData.LastName;
+            var oldContactsList = ContactData.GetAllContacts();
+            var toBeModified = oldContactsList[0];
+            
+            Application.Contacts.Modify(toBeModified, newContactData);
+            var newContactList = ContactData.GetAllContacts();
+            oldContactsList[0].FirstName = newContactData.FirstName;
+            oldContactsList[0].LastName = newContactData.LastName;
             oldContactsList.Sort();
             newContactList.Sort();
             Assert.AreEqual(oldContactsList, newContactList);

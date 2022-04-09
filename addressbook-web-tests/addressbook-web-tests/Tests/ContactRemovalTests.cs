@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using addressbook_web_tests.Model;
+using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
@@ -9,11 +10,12 @@ namespace addressbook_web_tests.Tests
         {
             Application.Contacts.CreateContactIfNeeded();
 
-            var oldContactsList = Application.Contacts.GetContactList();
+            var oldContactsList = ContactData.GetAllContacts();
+            var toBeRemoved = oldContactsList[1];
 
-            Application.Contacts.Remove(1);
+            Application.Contacts.Remove(toBeRemoved);
 
-            var newContactsList = Application.Contacts.GetContactList();
+            var newContactsList = ContactData.GetAllContacts();
             oldContactsList.RemoveAt(0);
             oldContactsList.Sort();
             newContactsList.Sort();

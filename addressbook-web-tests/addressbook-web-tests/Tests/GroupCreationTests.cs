@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml.Serialization;
 using addressbook_web_tests.Model;
 using Newtonsoft.Json;
@@ -73,15 +74,13 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void DBConnectivityTest()
         {
-            var start = DateTime.Now;
-            var listFromUI = Application.Groups.GetGroupList();
-            var end = DateTime.Now;
-            Console.WriteLine("UI " + end.Subtract(start));
-
-            start = DateTime.Now;
-            GroupData.GetAllGroups();
-            end = DateTime.Now;
-            Console.WriteLine("DB " + end.Subtract(start));
+            var contacts = GroupData.GetAllGroups()[0].GetContacts();
+            Thread.Sleep(2000);
+            Console.WriteLine(contacts.Count);
+            foreach (var c in contacts)
+            {
+                Console.WriteLine(c.FirstName + " " + c.LastName);
+            }
         }
     }
 }

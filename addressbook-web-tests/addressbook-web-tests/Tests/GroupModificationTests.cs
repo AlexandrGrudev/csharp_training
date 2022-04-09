@@ -17,7 +17,7 @@ namespace addressbook_web_tests.Tests
             Application.Groups.CreateGroupIfNeedeed();
             var oldGroupsList = GroupData.GetAllGroups();
             var oldData = oldGroupsList[1];
-            Application.Groups.Modify(1, newGroupData);
+            Application.Groups.Modify(oldData, newGroupData);
 
             var newGroupsList = GroupData.GetAllGroups();
             oldGroupsList[1].Name = newGroupData.Name;

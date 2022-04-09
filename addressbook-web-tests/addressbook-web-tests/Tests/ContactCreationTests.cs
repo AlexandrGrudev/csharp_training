@@ -37,12 +37,12 @@ namespace addressbook_web_tests.Tests
 
         [Test, TestCaseSource(nameof(ContactDataFromJsonFile))]
         public void ContactCreationTest(ContactData contactData)
-        { 
-            var oldContactsList = Application.Contacts.GetContactList();
+        {
+            var oldContactsList = ContactData.GetAllContacts();
             
             Application.Contacts.Create(contactData);
 
-            var newContactList = Application.Contacts.GetContactList();
+            var newContactList = ContactData.GetAllContacts();
             oldContactsList.Add(contactData);
             oldContactsList.Sort();
             newContactList.Sort();

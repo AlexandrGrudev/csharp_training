@@ -33,6 +33,18 @@ namespace addressbook_web_tests.AppManager
             return this;
         }
 
+        public GroupHelper Modify(GroupData oldGroupData, GroupData newGroupData)
+        {
+            AppManager.Navigator.GoToGroupsPage();
+            SelectGroup(oldGroupData.Id);
+            ModifySelectedGroup();
+            FillGroupForm(newGroupData);
+            SubmitGroupModification();
+            AppManager.Navigator.GoToGroupsPage();
+
+            return this;
+        }
+
         public GroupHelper Remove(int index)
         {
             AppManager.Navigator.GoToGroupsPage();

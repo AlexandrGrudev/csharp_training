@@ -68,5 +68,15 @@ namespace addressbook_web_tests.Model
                 return (from g in db.Groups select g).ToList();
             }
         }
+
+        public List<ContactData> GetContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts
+                    from gcr in db.GCR.Where(p => p.GroupID == Id && p.ContactID == c.Id && c.Deprecated == "0000-00-00 00:00:00")
+                    select c).Distinct().ToList();
+            }
+        }
     }
 }
