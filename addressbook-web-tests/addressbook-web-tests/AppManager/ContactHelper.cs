@@ -224,6 +224,21 @@ namespace addressbook_web_tests.AppManager
                 Driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            AppManager.Navigator.OpenHomePage();
+            SelectGroupInFilter(group.Name);
+            SelectContact(contact.Id);
+            RemoveFromGroupButtonClick();
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(10)).Until(d =>
+                Driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void SelectGroupInFilter(string groupName)
+        {
+            new SelectElement(Driver.FindElement(By.Name("group"))).SelectByText(groupName);
+        }
+
         public void ClearGroupFilter()
         {
             new SelectElement(Driver.FindElement(By.Name("group"))).SelectByText("[all]");
@@ -237,6 +252,11 @@ namespace addressbook_web_tests.AppManager
         public void SelectGroupToAdd(string groupName)
         {
             new SelectElement(Driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
+        }
+
+        private void RemoveFromGroupButtonClick()
+        {
+            Driver.FindElement(By.Name("remove")).Click();
         }
 
         public void CommitAddingContactToGroup()

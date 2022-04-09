@@ -147,6 +147,7 @@
     <Compile Include="Tests\GroupModificationTests.cs" />
     <Compile Include="Tests\GroupRemovalTests.cs" />
     <Compile Include="Tests\LoginTests.cs" />
+    <Compile Include="Tests\RemovingContactFromGroupTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
