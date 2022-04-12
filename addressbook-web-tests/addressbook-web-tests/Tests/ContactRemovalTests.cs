@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -11,7 +11,7 @@ namespace addressbook_web_tests.Tests
             Application.Contacts.CreateContactIfNeeded();
 
             var oldContactsList = ContactData.GetAllContacts();
-            var toBeRemoved = oldContactsList[1];
+            var toBeRemoved = oldContactsList[0];
 
             Application.Contacts.Remove(toBeRemoved);
 

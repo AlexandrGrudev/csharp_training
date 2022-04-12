@@ -7,7 +7,7 @@ namespace addressbook_web_tests.Tests
 {
     public class AutoTestBase
     {
-        public static bool PERFORM_LONG_UI_CHECKS = false;
+        public static bool PERFORM_LONG_UI_CHECKS = true;
         protected ApplicationManager Application;
 
         [SetUp]

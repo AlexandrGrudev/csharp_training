@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace addressbook_web_tests.Tests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -35,7 +35,7 @@ namespace addressbook_web_tests.Tests
             return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("contactsData.json"));
         }
 
-        [Test, TestCaseSource(nameof(ContactDataFromJsonFile))]
+        [Test, TestCaseSource(nameof(ContactDataFromXmlFile))]
         public void ContactCreationTest(ContactData contactData)
         {
             var oldContactsList = ContactData.GetAllContacts();

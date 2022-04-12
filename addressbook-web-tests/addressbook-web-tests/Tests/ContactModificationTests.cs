@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace addressbook_web_tests.Tests
 {
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()

@@ -179,7 +179,12 @@ namespace addressbook_web_tests.Model
                 return 1;
             }
 
-            return LastName.CompareTo(other.LastName);
+            if (LastName.CompareTo(other.LastName) != 0)
+            {
+                return LastName.CompareTo(other.LastName);
+            }
+
+            return FirstName.CompareTo(other.FirstName);
         }
 
         public override string ToString()
